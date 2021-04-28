@@ -27,7 +27,7 @@ ENV \
 RUN \
   apk update \
   && apk upgrade --no-cache \
-  && apk add --no-cache jq openjdk11-jre-headless libstdc++ \
+  && apk add --no-cache openjdk11-jre-headless jq tini libstdc++ \
   && adduser -D waterfall waterfall
 
 # Post Project Setup
@@ -39,6 +39,7 @@ RUN mkdir proxy
 COPY init.sh ./
 
 # Container Setup
+ENTRYPOINT ["tini", "--"]
 CMD ["sh", "init.sh"]
 VOLUME /home/waterfall/proxy
 EXPOSE 25577/tcp

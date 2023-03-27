@@ -1,6 +1,6 @@
 # Fetch Image
 # Using alpine over openjdk for a much smaller image.
-FROM alpine:3.14
+FROM alpine:latest
 LABEL maintainer="jarrett.aiken@achl.fr"
 
 # Set Build Variables
@@ -28,9 +28,7 @@ ENV \
 # since Busybox has its own version of wget.
 # Also setup waterfall user.
 RUN \
-  sed -i 's/v3.14/edge/g' /etc/apk/repositories \
-  && echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-  && apk -U upgrade --no-cache \
+  apk -U upgrade --no-cache \
   && apk add --no-cache ${JAVA_VERSION} jq tini libstdc++ \
   && adduser -D waterfall waterfall
 
